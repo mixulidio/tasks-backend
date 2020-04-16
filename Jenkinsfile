@@ -13,7 +13,12 @@ pipeline {
         }
         stage ('Deploy Beckend') {
             steps {
-                deploy adapters: [tomcat8(credentialsId: 'TomcatLogin',path: '', url:'http://192.168.99.100:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
+                deploy adapters: [tomcat8(credentialsId: 'TomcatLogin',path: '', url:'http://192.168.99.1:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
+            }
+        }
+        stage ('API Test') {
+            steps {
+                
             }
         }
         
