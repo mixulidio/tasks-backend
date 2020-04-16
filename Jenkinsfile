@@ -24,6 +24,15 @@ pipeline {
                 }
             }
         }
+        stage ('Deploy Fontend') {
+            steps {
+                dir('fontend'){
+                    git credentialsId: 'github_login', url: 'https://github.com/mixulidio/tasks-frontend'
+                    bat 'mvn clean package'
+                    deploy adapters: [tomcat8(credentialsId: 'TomcatLogin',path: '', url:'http://192.168.99.1:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
+                }
+            }
+        }
         
     }
 }
