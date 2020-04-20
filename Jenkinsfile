@@ -24,7 +24,7 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy Fontend') {
+        stage ('Deploy Frontend') {
             steps {
                 dir('fontend'){
                     git credentialsId: 'github_login', url: 'https://github.com/mixulidio/tasks-frontend'
