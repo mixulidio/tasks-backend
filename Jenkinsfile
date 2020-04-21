@@ -26,7 +26,7 @@ pipeline {
         }
         stage ('Deploy Frontend') {
             steps {
-                dir('fontend'){
+                dir('frontend'){
                     git credentialsId: 'github_login', url: 'https://github.com/mixulidio/tasks-frontend'
                     bat 'mvn clean package'
                     deploy adapters: [tomcat8(credentialsId: 'TomcatLogin',path: '', url:'http://192.168.99.1:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
@@ -45,6 +45,14 @@ pipeline {
             steps {
                 bat 'docker-compose build'
                 bat 'docker-compose up -d'
+            }
+        }
+        stage ('Check Prod') {
+            steps {
+                sleep(40)
+                dir('functional-test'){
+                    bat 'mvn verify -Dskip.surefire.tests'
+                }
             }
         }
     }
